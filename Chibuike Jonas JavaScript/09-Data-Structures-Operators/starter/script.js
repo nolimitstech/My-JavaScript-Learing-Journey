@@ -116,6 +116,7 @@ restaurant.orderPasta(...ingredients)
 */
 ////////THE REST PATTERN; this is the opp of the spread oprator
 ///examples
+/*
 const [a, b, ...others] = [1, 2, 3, 4, 5];
 console.log(a, b, ...others);
 ///another example
@@ -125,7 +126,7 @@ console.log(pizza, risotto, otherFood);
 //////////using the rest pattern to collect elements into a new object
 const { sat, ...weekdays } = restaurant.openingHours;
 console.log(sat, weekdays);
-
+*/
 //////example of using rest pattern to pass multiple values into an array
 /*
 const add = function (...numbers) {
@@ -137,6 +138,7 @@ add(3, 6, 9, 8);
 */
 
 ////////to sum up the numbers in each array
+/*
 const add = function (...numbers) {
   let sum = 0;
   for (let i = 0; i < numbers.length; i++) sum += numbers[i];
@@ -151,7 +153,7 @@ add(3, 6, 9, 8);
 //////using rest pattern on the order pizza obj
 restaurant.orderPizza('mushrooms', 'onions', 'pepper', 'carrot');
 restaurant.orderPizza('mushrooms'); ///will return only mushroom with an empty array cos nothin was pased
-
+*/
 
 /*
 ////////// let destucture the restaurant obj
@@ -222,5 +224,28 @@ const [i, , [j, k]] = nested;
 console.log(i, j, k);
 */
 
+///////////////SHORT CIRCUTING "OR LOGICAL OPERATOR"
 
+console.log(3 || "jonas"); //// 3 will be reportd to console cos the first value is a truthy value
+
+console.log(undefined || 0 || '' || 'Hello' || 23 || null); /////returns "Hello"cos its the first truthy value
+/////example 2
+const guest1 = restaurant.numGuests ? restaurant.numGuests : 10; /////means if nunGuests exists in the restaurant array it should returm restaurant.numGuests, else it should return 10
+console.log(guest1);
+////using 'OR' shortcircuting
+const guest2 = restaurant.numGuests || 10; ////means if restaurant.numGuest isnt there return 10;
+console.log(guest2);
+
+///////////////SHORT CIRCUTING "AND LOGICAL OPERATOR"
+console.log(0 && 'jonas'); ///resul is 0 cos '0' is a faulsy value ther/4 terminates operatn
+console.log(7 && 'jonas'); // result is "jonas" cos 7 is a truthy value there/4 continues operation to jonas
+console.log('hello' && 23 && null && 'jonas'); ///the result will be null
+
+///practical example
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushroom', 'spinach');
+}
+
+///the code can be rewritten using AND shortcircuting thus;
+restaurant.orderPizza && restaurant.orderPizza('mushroom', 'spinach');
 

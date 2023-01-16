@@ -8,6 +8,22 @@ const flights =
   */
 ///////// Destructing of objects
 /*
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+*/
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -15,20 +31,23 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
+  ///copied out display ES6 Enhanced obj literals
   openingHours: {
-    thu: {
+    thurs: {
       open: 12,
-      close: 22,
+      close: 2,
     },
     fri: {
       open: 11,
-      close: 23,
+      close: 3,
     },
     sat: {
       open: 0, // Open 24 hours
-      close: 24,
+      close: 6,
     },
   },
+  ////ES6 ENHANCED OBJECT LITERAL FOR OPENING HOURS
+  //openingHours,
 
   order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
@@ -42,7 +61,7 @@ const restaurant = {
   orderDelivery: function ({ time, address, mainIndex, starterIndex }) {
     console.log(time, address, mainIndex, starterIndex);
     ////using template literal to view sole below
-    console.log(`order Recieved! ${this.starterMenu[starterIndex]} and 
+    console.log(`order Recieved! ${this.starterMenu[starterIndex]} and
     ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
   },
 
@@ -58,9 +77,9 @@ const restaurant = {
 
 };
 
+console.log(restaurant);
 
-
-/////to pass methds/elemnts to the order delivery object we use; 
+/////to pass methds/elemnts to the order delivery object we use;
 restaurant.orderDelivery({
   time: '21: 30',
   address: '4 lakowe ibeju',
@@ -261,16 +280,16 @@ console.log(guest3); //// result is 0, cos 0 is a nullish value nt null or undef
 ///////////////////////////////////////
 // Coding Challenge #1
 
-/* 
+/*
 We're building a football betting app (soccer for my American friends 😅)!
 
-Suppose we get data from a web service about a certain game (below). In this 
+Suppose we get data from a web service about a certain game (below). In this
 challenge we're gonna work with the data. So here are your tasks:
 
 1. Create one player array for each team (variables 'players1' and 'players2')
 2. The first player in any player array is the goalkeeper and the others are
  field players. For Bayern Munich (team 1) create one variable ('gk') with the
-  goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 
+  goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10
   field players
 3. Create an array 'allPlayers' containing all players of both teams (22 players)
 4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a
@@ -279,7 +298,7 @@ challenge we're gonna work with the data. So here are your tasks:
 5. Based on the game.odds object, create one variable for each odd (called 'team1',
  'draw' and 'team2')
 6. Write a function ('printGoals') that receives an arbitrary number of player names
- (NOT an array) and prints each of them to the console, along with the number of 
+ (NOT an array) and prints each of them to the console, along with the number of
  goals that were scored in total (number of player names passed in)
 7. The team with the lower odd is more likely to win. Print to the console which
  team is more likely to win, WITHOUT using an if/else statement or the ternary
@@ -289,7 +308,7 @@ TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Th
 
 GOOD LUCK 😀
 */
-
+/*
 const game = {
   Club1: 'Bayern Munich',
   Club2: 'Borrussia Dortmund',
@@ -361,6 +380,7 @@ const {
 console.log(team1, draw, team2);
 */
 
+/*
 ////6. to print the number of goals scored to the console
 const printGoals = function (...players) {
   console.log(`${players.length} goals were scored`);
@@ -374,3 +394,74 @@ printGoals('lewandowski', 'Muller', 'ken', 'james');
 //// n/b code nt working, Team1 is undefined
 team1 > team2 && console.log('Team1 more likely to win');
 team1 < team2 && console.log('Team2 more likely to win');
+
+*/
+
+///////////THE FOR OF LOOP
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+for (const item of menu) console.log(item); /// it loops over the menu contents and produces the result individually
+
+////to get the array index using the FOR OF LOOP
+for (const item of menu.entries()) {
+  console.log(item); /// this will the array idex to each item in the loop
+}
+
+////To destructure the menu.entries we use, thereby making result better
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+//// ENHANCED OBJECT LITERALS: this is a simpler to add objects that are outside an object
+///SEE ILLUSTRATION IN THE RESTAURANT OBJECT ABOVE
+////Example 2, see  1 above
+//const days = ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat', 'sun',];
+
+// const Hours = {
+//   [days[2]]: {
+//     open: 12,
+//     close: 22,
+//   },
+//   [days[4]]: {
+//     open: 11,
+//     close: 23,
+//   },
+//   [days[3]]: {
+//     open: 0, // Open 24 hours
+//     close: 24,
+//   },
+// };
+// console.log(Hours);
+
+// for (const item of days.entries()) {
+//   console.log(item); /// this will the array idex to each item in the loop
+// }
+
+////OPTIONAL CHAINNING (?)
+////illustration using restaurant obj. without optional chaining
+if (restaurant.openingHours && restaurant.openingHours.mon)////means if both re available, then log to the console
+  console.log(restaurant.openingHours.mon.open); //// result willl be an errror
+
+////USING OPTIONAL CHAINING to prevent the error msg at cpnsole  WE HAVE
+console.log(restaurant.openingHours.mon?.open); ////means if restaurant.openH.mon is available then log the opening hr, else log undefined instead of an error
+console.log(restaurant.openingHours?.mon?.open); ////this checks for both OPH AND MON
+
+//another example
+const days = ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat', 'sun',];
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed'; ////using nullish operator(??) to take care of 0 OPH on sat
+  // console.log(day);
+  console.log(`on ${day}, we open at ${open}`);
+
+}
+
+
+
+////Another example using methds
+console.log(restaurant.order?.(0, 1) ?? `Method does nt exist`); ////exists
+console.log(restaurant.orderRisotto?.(0, 1) ?? `Method does nt exist`); //// does't exists
+
+//////practical example of chaining and nullish operator
+const users = [{ name: 'jonas', email: 'johnken@gmail.com' }];
+console.log(users[0]?.name ?? 'User array empty 1'); ////will log name(jonas)
+console.log((users[0] && users[0].name) ?? 'User array empty 2'); /// will log name (jonas)

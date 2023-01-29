@@ -7,7 +7,7 @@ const flights =
 
   */
 ///////// Destructing of objects
-/*
+
 const openingHours = {
   thu: {
     open: 12,
@@ -22,7 +22,7 @@ const openingHours = {
     close: 24,
   },
 };
-*/
+
 
 const restaurant = {
   name: 'Classico Italiano',
@@ -32,20 +32,20 @@ const restaurant = {
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
   ///copied out display ES6 Enhanced obj literals
-  openingHours: {
-    thurs: {
-      open: 12,
-      close: 2,
-    },
-    fri: {
-      open: 11,
-      close: 3,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 6,
-    },
-  },
+  // openingHours: {
+  //   thurs: {
+  //     open: 12,
+  //     close: 2,
+  //   },
+  //   fri: {
+  //     open: 11,
+  //     close: 3,
+  //   },
+  //   sat: {
+  //     open: 0, // Open 24 hours
+  //     close: 6,
+  //   },
+  // },
   ////ES6 ENHANCED OBJECT LITERAL FOR OPENING HOURS
   //openingHours,
 
@@ -77,53 +77,53 @@ const restaurant = {
 
 };
 
+
+
 console.log(restaurant);
 
 /////to pass methds/elemnts to the order delivery object we use;
-restaurant.orderDelivery({
-  time: '21: 30',
-  address: '4 lakowe ibeju',
-  mainIndex: 2,
-  starterIndex: 2,
-});
+// restaurant.orderDelivery({
+//   time: '21: 30',
+//   address: '4 lakowe ibeju',
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
 
 /////// THE SPREAD OPERATOR; wheneva we need the elemnts of an array indiv, we use the spread operator
-const arr = [2, 5, 7];
-const newarr = [1, 2, ...arr]; /// the spread operator to add new array elemnts to arr
-console.log(newarr);
-console.log(...newarr); /// using spread to retriev array elemnts individualy
+// const arr = [2, 5, 7];
+// const newarr = [1, 2, ...arr]; /// the spread operator to add new array elemnts to arr
+// console.log(newarr);
+// console.log(...newarr); /// using spread to retriev array elemnts individualy
 
 ///////using spread oprator to add element to the restaurant mainmenu array
-const newMenu = [...restaurant.mainMenu, 'Gnocci']
-console.log(newMenu);
-console.log(restaurant.mainMenu); //////  'gnocci' nt added
+/ //////  'gnocci' nt added
 
 ///////using spread operator to create shalow copy of arrays
-const mainMenuCopy = [...restaurant.mainMenu];
-console.log(mainMenuCopy);
+// const mainMenuCopy = [...restaurant.mainMenu];
+// console.log(mainMenuCopy);
 
 /////////using spread operstor to create shallow copies of objects with new methds
-const newRestaurant = {
-  foundedIn: '1990', founder: 'Chibuike', ...restaurant,
-}
-console.log(newRestaurant);
+// const newRestaurant = {
+//   foundedIn: '1990', founder: 'Chibuike', ...restaurant,
+// }
+// console.log(newRestaurant);
 
 ////////////////// to make a copy of restaurant with a diff name
-const restaurantCopy = { ...restaurant };
-restaurantCopy.name = 'restarante';
-console.log(restaurantCopy.name);
-console.log(restaurant.name);
+// const restaurantCopy = { ...restaurant };
+// restaurantCopy.name = 'restarante';
+// console.log(restaurantCopy.name);
+// console.log(restaurant.name);
 
 
 
 ///////using spread operator to join the elemnts of two diff. arrays
-const jointMenu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-console.log(jointMenu);
+// const jointMenu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(jointMenu);
 
-//////////using the spread operator to destructure a string
-const str = 'jonas';
-const letters = [...str, '', 'S.'];
-console.log(letters);//// the result is letters of jonas will be seperated into single elemnts
+// //////////using the spread operator to destructure a string
+// const str = 'jonas';
+// const letters = [...str, '', 'S.'];
+// console.log(letters);//// the result is letters of jonas will be seperated into single elemnts
 
 /*
 ////creating a prompt for ordering pizza
@@ -399,18 +399,18 @@ team1 < team2 && console.log('Team2 more likely to win');
 
 ///////////THE FOR OF LOOP
 
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-for (const item of menu) console.log(item); /// it loops over the menu contents and produces the result individually
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// for (const item of menu) console.log(item); /// it loops over the menu contents and produces the result individually
 
-////to get the array index using the FOR OF LOOP
-for (const item of menu.entries()) {
-  console.log(item); /// this will the array idex to each item in the loop
-}
+// ////to get the array index using the FOR OF LOOP
+// for (const item of menu.entries()) {
+//   console.log(item); /// this will produce the array idex to each item in the loop
+// }
 
-////To destructure the menu.entries we use, thereby making result better
-for (const [i, el] of menu.entries()) {
-  console.log(`${i + 1}: ${el}`);
-}
+// ////To destructure the menu.entries we use, thereby making result better
+// for (const [i, el] of menu.entries()) {
+//   console.log(`${i + 1}: ${el}`);
+// }
 
 //// ENHANCED OBJECT LITERALS: this is a simpler to add objects that are outside an object
 ///SEE ILLUSTRATION IN THE RESTAURANT OBJECT ABOVE
@@ -434,26 +434,27 @@ for (const [i, el] of menu.entries()) {
 // console.log(Hours);
 
 // for (const item of days.entries()) {
-//   console.log(item); /// this will the array idex to each item in the loop
+//   console.log(item); /// this will add the array idex to each item in the loop
 // }
 
 ////OPTIONAL CHAINNING (?)
 ////illustration using restaurant obj. without optional chaining
-if (restaurant.openingHours && restaurant.openingHours.mon)////means if both re available, then log to the console
-  console.log(restaurant.openingHours.mon.open); //// result willl be an errror
+
+// if (restaurant.openingHours && restaurant.openingHours.mon)////means if both re available, then log to the console
+//   console.log(restaurant.openingHours.mon.open); //// result willl be an errror
 
 ////USING OPTIONAL CHAINING to prevent the error msg at cpnsole  WE HAVE
-console.log(restaurant.openingHours.mon?.open); ////means if restaurant.openH.mon is available then log the opening hr, else log undefined instead of an error
-console.log(restaurant.openingHours?.mon?.open); ////this checks for both OPH AND MON
+// console.log(restaurant.openingHours.mon?.open); ////means if restaurant.openH.mon is available then log the opening hr, else log undefined instead of an error
+// console.log(restaurant.openingHours?.mon?.open); ////this checks for both OPH AND MON
 
-//another example
-const days = ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat', 'sun',];
-for (const day of days) {
-  const open = restaurant.openingHours[day]?.open ?? 'closed'; ////using nullish operator(??) to take care of 0 OPH on sat
-  // console.log(day);
-  console.log(`on ${day}, we open at ${open}`);
+// //another example
+// const days = ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat', 'sun',];
+// for (const day of days) {
+//   const open = restaurant.openingHours[day]?.open ?? 'closed'; ////using nullish operator(??) to take care of 0 OPH on sat
+//   // console.log(day);
+//   console.log(`on ${day}, we open at ${open}`);
 
-}
+// }
 
 
 
@@ -465,3 +466,35 @@ console.log(restaurant.orderRisotto?.(0, 1) ?? `Method does nt exist`); //// doe
 const users = [{ name: 'jonas', email: 'johnken@gmail.com' }];
 console.log(users[0]?.name ?? 'User array empty 1'); ////will log name(jonas)
 console.log((users[0] && users[0].name) ?? 'User array empty 2'); /// will log name (jonas)
+
+
+/////LOOPING OVER OBJECTS PROPERTY NAMES USING THE 'FOR OF LOOP'
+for (const day of Object.keys(openingHours)) { ///'obj.keys' is used to pull the elements of an object. resul will be thurs, fri ssat
+  console.log(day);
+}
+
+const properties = Object.keys(openingHours);
+console.log(properties); ////result will thurs, fri, sat
+
+console.log(`we are open on ${properties.length} days`); // will log 'we re open for 3 days
+
+///to log 'we re open for 3 daYS: thurs, fri, sat' we use
+let openStr = `we are open on ${properties.length} days: `;
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+/////LOOPING OVER OBJECTS PROPERTY VALUES USING THE 'FOR OF LOOP'
+const values = Object.values(openingHours);
+console.log(values); ///logs the values/time for each opening day
+
+///to log both names and values we use
+const entries = Object.entries(openingHours);
+console.log(entries); //wil log both day nd time
+
+/// to loop over the obj we have...
+for (const [key, { open, close }] of entries); {
+  console.log(`On ${day} we open at ${open} and clode at ${close}`); ///this will log on thurs, we open at 12 ND close at 5. action wil be repeatd for other days
+}
+

@@ -656,4 +656,42 @@ rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
 
 
+///NEW METHOD OF POPULATING A MAP WITHOUT USING SET METHD
+// Maps: Iteration
+const question = new Map([
+  ["question", "What is the best programming language in the world?"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "JavaScript"],
+  ["correct", 3],
+  [true, "Correct 🎉"],
+  [false, "Try again!"],
+]);
+console.log(question);
+
+///How to convert objects to map. ie creating a map from an object
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+///Using a 'For Loop' to print the elemnts of 'question' to the consol
+console.log(question.get("question"));
+for (const [key, value] of question) {
+  /// the for loop
+  if (typeof key === "number") console.log(`Answer ${key}: ${value}`); ///this wil print only keys 1, 2, 3 and their values
+}
+
+///example using a PROMPT
+// const answer = Number(prompt("your answer"));
+// console.log(answer);
+
+///To log the TRUE KEY'S VALUE indirectly using the power of boolean we have;
+// console.log(question.get(question.get("correct") === answer)); ///this wil print CORRECT if prompt answer is 3, same as corect key value in the map. it will print TRY AGAIN if answer is diff
+
+console.log([...question]); ///TO convert map back to an array
+console.log([...question.keys()]); ///to log all the keys
+console.log([...question.values()]); /// to log all the values
+
+
+
 

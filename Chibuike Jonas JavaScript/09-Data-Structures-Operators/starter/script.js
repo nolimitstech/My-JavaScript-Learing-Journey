@@ -459,42 +459,201 @@ team1 < team2 && console.log('Team2 more likely to win');
 
 
 ////Another example using methds
-console.log(restaurant.order?.(0, 1) ?? `Method does nt exist`); ////exists
-console.log(restaurant.orderRisotto?.(0, 1) ?? `Method does nt exist`); //// does't exists
+// console.log(restaurant.order?.(0, 1) ?? `Method does nt exist`); ////exists
+// console.log(restaurant.orderRisotto?.(0, 1) ?? `Method does nt exist`); //// does't exists
 
 //////practical example of chaining and nullish operator
-const users = [{ name: 'jonas', email: 'johnken@gmail.com' }];
-console.log(users[0]?.name ?? 'User array empty 1'); ////will log name(jonas)
-console.log((users[0] && users[0].name) ?? 'User array empty 2'); /// will log name (jonas)
+// const users = [{ name: 'jonas', email: 'johnken@gmail.com' }];
+// console.log(users[0]?.name ?? 'User array empty 1'); ////will log name(jonas)
+// console.log((users[0] && users[0].name) ?? 'User array empty 2'); /// will log name (jonas)
 
 
 /////LOOPING OVER OBJECTS PROPERTY NAMES USING THE 'FOR OF LOOP'
-for (const day of Object.keys(openingHours)) { ///'obj.keys' is used to pull the elements of an object. resul will be thurs, fri ssat
-  console.log(day);
-}
+// for (const day of Object.keys(openingHours)) { ///'obj.keys' is used to pull the elements of an object. resul will be thurs, fri ssat
+//   console.log(day);
+// }
 
-const properties = Object.keys(openingHours);
-console.log(properties); ////result will thurs, fri, sat
+// const properties = Object.keys(openingHours);
+// console.log(properties); ////result will thurs, fri, sat
 
-console.log(`we are open on ${properties.length} days`); // will log 'we re open for 3 days
+// console.log(`we are open on ${properties.length} days`); // will log 'we re open for 3 days
 
 ///to log 'we re open for 3 daYS: thurs, fri, sat' we use
-let openStr = `we are open on ${properties.length} days: `;
-for (const day of properties) {
-  openStr += `${day}, `;
-}
-console.log(openStr);
+// let openStr = `we are open on ${properties.length} days: `;
+// for (const day of properties) {
+//   openStr += `${day}, `;
+// }
+// console.log(openStr);
 
 /////LOOPING OVER OBJECTS PROPERTY VALUES USING THE 'FOR OF LOOP'
-const values = Object.values(openingHours);
-console.log(values); ///logs the values/time for each opening day
+// const values = Object.values(openingHours);
+// console.log(values); ///logs the values/time for each opening day
 
 ///to log both names and values we use
-const entries = Object.entries(openingHours);
-console.log(entries); //wil log both day nd time
+// const entries = Object.entries(openingHours);
+// console.log(entries); //wil log both day nd time
 
 /// to loop over the obj we have...
-for (const [key, { open, close }] of entries); {
-  console.log(`On ${day} we open at ${open} and clode at ${close}`); ///this will log on thurs, we open at 12 ND close at 5. action wil be repeatd for other days
+// for (const [key, { open, close }] of entries); {
+//   console.log(`On ${day} we open at ${open} and clode at ${close}`); ///this will log on thurs, we open at 12 ND close at 5. action wil be repeatd for other days
+// }
+
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+*/
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+////CODING CHALLENGE 2 SOLUTION
+// solution 1
+for (const [i, player] of game.scored.entries())//////player reps the entries in the scored obj
+  console.log(`goal ${i + 1}: ${player}`); ///// 'i' reps the index numbers
+
+///solution 2
+const odds = Object.values(game.odds); ///creatin a variable for obj values
+let average = 0; ////initial loop condition
+for (const odd of odds) average += odd;///creatin a loop that sums up the odd values
+average /= odds.length;///dividing the sum/lengt of the odds array
+console.log(average); ///result is the average 3.6999
+
+///solution 3
+for (const [team, odd] of Object.entries(game.odds)) { ///used to generat odds per outcome
+  console.log(team, odd); ////this logs the odds associated to each outcome in the odds array
+  const teamStr = team === 'x' ? 'draw' : `Victory ${game[team]}`; /// means if team = x, let draw be reportd else victory team name 
+  console.log(`Odd of ${teamStr} ${odd}`);
 }
+
+/////////SETS: They re used to remov duplicates in arrays, 
+const ordersSet = new Set([
+  'pasta',
+  'pasta',
+  'pizza',
+  'Risotto',
+  'pizza',
+  'Risotto',
+]);
+console.log(ordersSet); ///this will log 3 items without repetition
+console.log(new Set('jonas')); ///this will log the letters of jonas seperatly
+
+console.log(ordersSet.size); ///this logs the diff/unique contents of the array
+console.log(ordersSet.has('pizza')); ///logs 'true' checks if an elemnt is available in the set
+console.log(ordersSet.has('Bread')); ///logs 'false'
+console.log(ordersSet.add('Garlic')); ///adds garlic to orderset
+console.log(ordersSet.add('Garlic'));///ignored
+console.log(ordersSet.delete('pasta')); ///pasta is deletd from orderset
+//ordersSet.clear(); ///used to clear the contents of a set
+console.log(ordersSet);
+
+///TO LOOP OVER A SET WE USE;
+for (const order of ordersSet) console.log(order); ///this will iterate over the contents of orderset nd loop over them
+
+///practical example of using sets
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'cook']; ///N/B this is an array
+// const staffUnique = new Set(staff);
+// console.log(staffUnique); ///this will log unique set of staff without repetition in a set format
+
+const staffUnique = [...new Set(staff)]; //use the "Spread Operator" to log the result in an aray format, seperatd with comas
+console.log(staffUnique);
+
+///to log the size of the staff array using set we have;
+console.log(new Set(['waiter', 'chef', 'waiter', 'manager', 'chef', 'cook']).size);
+console.log(new Set('Chibuikejohnkingsley').size); //another eg. logs the number of alphabets in the name
+
+
+/////MAPS
+const rest = new Map();
+rest.set('name', 'Classico Italiano'); ///This is hw maps re created/added/updated
+rest.set(1, 'Firenze, Italy');///This is hw maps re created/added/updated
+console.log(rest.set(2, 'Lisbon, Portugal'));///This is hw maps re created/added/updated
+
+
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+console.log(rest.get('name')); ///used to retrieve elemnts from a map
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+///to retrieve the value of 'true' from the map, we can manipulate thus;
+const time = 21;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); ////the result is 'we re open' which is the value of true in the map
+
+///how to check for key/elemnts availabity in maps
+console.log(rest.has('categories')); //result is true
+console.log(rest.delete(2)); /// used to delete keys
+console.log(rest.size); //used to know the size/number of the keys/elemnts in a map
+//rest.clear(); //used to clear all map content
+
+///TO ADD ARRAYS TO MAP WE USE;
+const arr = [1, 2]; //create aray variable
+rest.set(arr, 'Test');///add aray value to map
+console.log(rest);
+console.log(rest.get(arr));
+
+//adding DOM elemnts to map thurs
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+
+
 

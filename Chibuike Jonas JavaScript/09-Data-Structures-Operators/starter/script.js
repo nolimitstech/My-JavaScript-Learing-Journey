@@ -693,5 +693,239 @@ console.log([...question.keys()]); ///to log all the keys
 console.log([...question.values()]); /// to log all the values
 
 
+///////////////////////////////////////
+// CODING CHALLENGE #3
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+
+
+///SOLUTIONS TO CHALLENGE
+// 1.
+const events = [...new Set(gameEvents.values())];/////code for events without duplicate
+console.log(events);
+
+// 2.
+gameEvents.delete(64);////code deletes this event
+
+// 3.
+console.log(
+  `An event happened, on average, every ${90 / gameEvents.size} minutes`
+);
+// const time = [...gameEvents.keys()].pop();////to calc average using 92 minutes as full time
+// console.log(time);
+// console.log(
+//   `An event happened, on average, every ${time / gameEvents.size} minutes`
+// );
+
+// 4.
+for (const [min, event] of gameEvents) {////using for of loop to iterate the half each event ocured
+  const half = min <= 45 ? 'FIRST' : 'SECOND';/////code for selectin the half event occured 
+  console.log(`[${half} HALF] ${min}: ${event}`);
+}
+
+///////////////////////////////////////
+// Working With Strings - Part 1
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
+
+// console.log(plane[0]);///wil log A
+// console.log(plane[1]);///wil log 3
+// console.log(plane[2]);///wil log 2
+// console.log('B737'[0]);///wil log B
+
+// console.log(airline.length);///wil log 16
+// console.log('B737'.length);///wil log 4
+
+// console.log(airline.indexOf('r'));///wil log 6, counts both empty space
+// console.log(airline.lastIndexOf('r'));///wil log 10(the last r in airline variable)
+// console.log(airline.indexOf('portugal'));///this wil be -1 cos lower case p for portugal cant be found
+// console.log(airline.indexOf('Portugal')); ///this wil log 8
+
+// ////THE SLICE METHOD ON STRINGS; the results of slice are sub strings
+// console.log(airline.slice(4));///Starts from the forth leter. result is 'Air Portugal'
+// console.log(airline.slice(4, 7));///result is Air. 4 is beginng while 7 is the end
+
+// console.log(airline.slice(0, airline.indexOf(' ')));///result is AIR, ie where the first space started
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //result is PORTUGAL, + 1 is used to remove the space b/4 portugal that was added too
+
+
+// console.log(airline.slice(-2));///result wilbe 'al' cos it wil stat extracting frm the end
+// console.log(airline.slice(1, -1));///rsult wil be AP Air Portuga, ist and last letters re cut off
+
+
+// ///EXAMPLE, Checking if airline customer got midle seat or others
+// const checkMiddleSeat = function (seat) { ///the functn
+//   // B and E are middle seats
+//   const s = seat.slice(-1);//using slice to pick the last letter in ticket number
+//   if (s === 'B' || s === 'E') console.log('You got the middle seat 😬');//if conditional statmnt
+//   else console.log('You got lucky 😎');
+// };
+
+// checkMiddleSeat('11B');
+// checkMiddleSeat('23C');
+// checkMiddleSeat('3E');
+
+// console.log(new String('jonas'));
+// console.log(typeof new String('jonas'));
+
+// console.log(typeof new String('jonas').slice(1));
+
+
+///////////////////////////////////////
+// Working With Strings - Part 2
+
+const airline = 'TAP Air Portugal';
+
+console.log(airline.toLowerCase());///changes letters to lowercase
+console.log(airline.toUpperCase());///changes letters to Uppercase
+
+// EXAMPLE 2, Fix capitalization in airline customer name name
+const passenger = 'jOnAS'; // Jonas
+const passengerLower = passenger.toLowerCase();
+console.log(passengerLower);////answer is 'jonas'
+console.log(passengerLower[0].toUpperCase());////answer is 'J'
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);//// 'J' + onas
+console.log(passengerCorrect); /// Jonas wil be loged
+
+// EXAMPLE 3, Comparing Passenger emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+const normalizedEmail = loginEmail.toLowerCase().trim();///converts to lowercase then trims it by removin spaces nd junks
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);////result is 'true' cos they re now same
+
+// replacing parts of strngs(eg pounds bill to dollar bil writing format)
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');////N/B write the one to be replacd b4 the replacmnt value
+console.log(priceUS);//the result wil be 288.97$
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+
+console.log(announcement.replace('door', 'gate'));///works, but only replaces the first instanc 
+// console.log(announcement.replaceAll('door', 'gate'));
+console.log(announcement.replace(/door/g, 'gate')); ///to replace all instances, we use a regular expresion like this / /. 'g' stands for global
+
+// STRING METHD THAT RETURN BOOLEANS
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320')); ///returns 'true'
+console.log(plane.includes('Boeing'));///returns 'false'
+console.log(plane.startsWith('Airb'));///returns 'true'
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW ARirbus family');
+}
+
+// Practice exercise for checking pasenger baggages
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();///impt to change to lower/uppercase to harmonize the data input/recievd
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage('I have a laptop, some Food and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
+
+///////////////////////////////////////
+// Working With Strings - Part 3
+
+// SPLIT AND JOIN
+
+console.log('a+very+nice+string'.split('+'));///divides the str along the + signs and forms an array with result
+console.log('Jonas Schmedtmann'.split(' ')); ///divides the string into arrays along the ' ' space
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');///using the power of destructuring to produce first nd lastName split
+// console.log(firstName, lastName);//result wil be Jonas Schmedtmann
+
+// to add mr and change sawname to uppercase we use;
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName); ///result is Mr jonas SCHETMANN
+
+
+//
+const capitalizeName = function (name) {
+  const names = name.split(' ');
+  const namesUpper = [];///an empty aray for the loop
+
+  for (const n of names) {
+    namesUpper.push(n[0].toUpperCase() + n.slice(1));///to change first leter to upercas nd add to the word without firt leter
+
+    // namesUpper.push(n.replace(n[0], n[0].toUpperCase()));///Another methd using the REPLACE APPROACH
+  }
+  console.log(namesUpper.join(' ')); ///wil log Jessica Ann Smith Davis
+};
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('jonas schmedtmann');
+
+// PADDING A STRING; means adding a number of character to a string until it reaches desired lenght
+const message = 'Go to gate 23!';
+console.log(message.padStart(20, '+'));///adds + character in the begining until total character in messgae reches 20
+console.log(message.padStart(20, '+').padEnd(30, '+'));////adds + sign to the begining to complet 20 and in the end to complet 30
+console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+
+
+///EXAMPLE OF PADDING WITH A REAL WORLD PRACTICE
+const maskCreditCard = function (number) {
+  const str = number + '';///converts a number to string. N/B number + string = string
+  const last = str.slice(-4);///logs only the last 4 digits of str
+  return last.padStart(str.length, '*');///pads last from start up to the full length of str with '*"
+};
+
+console.log(maskCreditCard(64637836));
+console.log(maskCreditCard(43378463864647384));
+console.log(maskCreditCard('334859493847755774747'));
+
+// REPEAT METHD; Allows us to repeat same string multiple times
+const message2 = 'Bad waether... All Departues Delayed... ';
+console.log(message2.repeat(5));///this repeats/logs the message2 five times
+
+
+///a functn dat repeats plane availabilty at airport
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'🛩'.repeat(n)}`);//logs the amt of plane in line with plane imag repeated to the numbers
+};
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+
+
+
+
+
 
 

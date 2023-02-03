@@ -225,7 +225,6 @@ console.log(addTax(0.1, 200));///ans is 220(400 * 0.1)
 
 const addVAT = addTax.bind(null, 0.23);///null is used cos there is no this keyword to bind as first argumnt, rate is now fixed at 0.23
 // addVAT = value => value + value * 0.23;
-git
 console.log(addVAT(100));///log 123
 console.log(addVAT(23));///logs 28.29
 
@@ -239,3 +238,162 @@ const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
 
+////////CODING CHALLENGE
+///////////////////////////////////////
+// Coding Challenge #1
+
+/*
+Let's build a simple poll app!
+
+A poll has a question, an array of options from which people can choose, and an array with the number of replies for each option. This data is stored in the starter object below.
+
+Here are your tasks:
+
+1. Create a method called 'registerNewAnswer' on the 'poll' object. The method does 2 things:
+  1.1. Display a prompt window for the user to input the number of the selected option. The prompt should look like this:
+        What is your favourite programming language?
+        0: JavaScript
+        1: Python
+        2: Rust
+        3: C++
+        (Write option number)
+
+  1.2. Based on the input number, update the answers array. For example, if the option is 3, increase the value AT POSITION 3 of the array by 1. Make sure to check if the input is a number and if the number makes sense (e.g answer 52 wouldn't make sense, right?)
+2. Call this method whenever the user clicks the "Answer poll" button.
+3. Create a method 'displayResults' which displays the poll results. The method takes a string as an input (called 'type'), which can be either 'string' or 'array'. If type is 'array', simply display the results array as it is, using console.log(). This should be the default option. If type is 'string', display a string like "Poll results are 13, 2, 4, 1".
+4. Run the 'displayResults' method at the end of each 'registerNewAnswer' method call.
+
+HINT: Use many of the tools you learned about in this and the last section 😉
+
+BONUS: Use the 'displayResults' method to display the 2 arrays in the test data. Use both the 'array' and the 'string' option. Do NOT put the arrays in the poll object! So what shoud the this keyword look like in this situation?
+
+BONUS TEST DATA 1: [5, 2, 3]
+BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
+
+GOOD LUCK 😀
+*/
+
+////SOLUTION TO CODING CHALLENGE
+const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  // This generates [0, 0, 0, 0]. More in the next section 😃
+  answers: new Array(4).fill(0),
+
+  ///NO 1
+  registerNewAnswer() {
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}\n(Write option number)`/// '\n' represents new line
+      )
+    );
+    console.log(answer);
+
+    ///Register answer
+    typeof answer === 'number' &&////anwer is the feedback frm prompt
+      answer < this.answers.length &&
+      this.answers[answer]++;///logs in new count on each choice
+
+    //console.log(this.answers);
+    this.displayResults();
+    this.displayResults('string');
+  },
+  displayResults(type = 'array') { /// NOS 3 ND 4
+    if (type === 'array') {
+      console.log(this.answers);
+    } else if (type === 'string') {
+      // Poll results are 13, 2, 4, 1
+      console.log(`Poll results are ${this.answers.join(', ')}`);//logs 'Poll results are 0, 1, 0, 0'
+    }
+  },
+
+
+};
+//poll.registerNewAnswer();///prompts the question
+//console.log(poll);
+
+///NO 2
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));////to get the numbr of counts for each choice selected when poll button is clicked
+
+////BONUS SOLUTIONS:
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+
+
+
+///////////IMMEDIATLY INVOKED FUNCTN EXPRESSIONS
+// IIFE
+(function () { ///rapped in parentesis to enable it run
+  console.log('This will never run again');
+  const isPrivate = 23;
+})();///  '()' is used to call it
+
+// console.log(isPrivate);
+
+(() => console.log('This will ALSO never run again'))();/// arow function, also wraped in parenthesis to avoid 
+
+
+///////////////////////////////////////
+// CLOSURES...CHECK CHAPTER 10, SLIDE 12 for more illustrations
+//the closure has more priority over the scope chain
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();///closure alows booker function to ve continous acces to the variables in its parent(secureBooking), any time its declared
+booker();
+booker();
+
+console.dir(booker);
+
+///////////////////////////////////////
+// More Closure Examples
+// Example 1
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();///declared first
+f();///declaratn works after g has been declared, else error msg wil pop 
+
+// Re-assigning f function
+h();
+f();///closure helps f functn  nt to loose conectn to the variables at its most recent birthplace
+
+
+// Example 2
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+  ///setTimeout(function(){}, 1000). this is the default format for writing set timers
+  setTimeout(function () { ///this uses closure to acess the variables in this parent even after the parent has finished running
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);//N/B 1000m/s = 1 minute
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+const perGroup = 1000;///this wil not be used by setTimeout functn cos the closure more priority over the scope chain
+boardPassengers(180, 3);
